@@ -6,6 +6,7 @@ using namespace std;
 class LinearHash{
     int size;
     float alpha;
+    int* hashTable;
     
     public:
         LinearHash(int size, float alpha);

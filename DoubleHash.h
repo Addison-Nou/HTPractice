@@ -1,4 +1,16 @@
 #pragma once
+#include <string>
 
-void DHInsert(int k, int p);
-void DHSearch(int k, int p);
+using namespace std;
+
+class DoubleHash{
+    int size;
+    int* hashTable;
+    
+    public:
+        DoubleHash(int size);
+        void DHInsert(int key);
+        int DHSearch(int key);
+        int getNumAtBucket(int bucket);
+        string DHConstructProbePath(int key);
+};

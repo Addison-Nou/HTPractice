@@ -16,29 +16,30 @@ int main()
     int k1;   //number to use in later functions
     
 
-    ifstream input ("input.txt");
+    ifstream input ("input.txt");   //Declaring input
 
-    if (input.is_open()){
+    if (input.is_open()){   //If the file is open, then read from it
         cout << "File is open." << endl;
 
-        input >> p;
+        input >> p;    //Grabbing input for 'p'
         cout << "Number of slots in hash table: " << p << endl;
 
-        input >> alpha;
+        input >> alpha;     //Grabbing input for 'alpha'
         cout << "Alpha: " << alpha << endl;
 
-        input >> n;
+        input >> n;     //Grabbing input for 'n'
         cout << "Number of keys to be inserted: " << n << endl;
 
         //Creating hash tables
         ChainedHash chash = ChainedHash(p);
         LinearHash lhash = LinearHash(p, alpha);
+        DoubleHash dhash = DoubleHash(p);
 
         //Perform hashing for each key
         for (int i = 0; i < n; i++){
             
-            input >> key;
-            cout << "Current key: " << key << endl;
+            input >> key;   //Grabbing input for current key
+            cout << "Current key: " << key << endl;     //cout to terminal for debugging
 
             //Chained Hashing
             chash.CHInsert(key);
@@ -47,63 +48,81 @@ int main()
             lhash.LHInsert(key);
 
             //Double Hash
+            dhash.DHInsert(key);
 
         }
 
-        input >> k1;
-        cout << "Value of k1: " << k1 << endl;
+        input >> k1;    //Grabbing input for k1
+
+        input.close();  //Closing the input
+        
+        cout << "Value of k1: " << k1 << endl;      //cout to terminal for debugging
 
         //************Creating Chain output file************
 
         ofstream output; //naming output
 
-        output.open("ChainOutput.txt");
-        cout << "Chain output file open" << endl;
+        output.open("ChainOutput.txt"); //Creating new text file for chain output
+        cout << "Chain output file open" << endl;   //cout to terminal for debugging
 
         //Outputting values
-        for (int i = 0; i < p; i++){
+        for (int i = 0; i < p; i++){    //Iterating through the hash table
             output << i << ":\t";
-            for (int j = 0; j < chash.getListSize(i); j++){ //For each bucket in the hash table, go through the linked list
-                output << chash.getNumAtIndex(i, j) << " ";
-                //cout << chash.getNumAtIndex(i, j) << " ";
+            for (int j = 0; j < chash.getListSize(i); j++){     //For each bucket in the hash table, go through the connected linked list
+                output << chash.getNumAtIndex(i, j) << " ";     //Output the number at each linked list index
             }
             output << endl;
         }
 
         //Searching for bucket containing given input
-
-        cout << "Searching for: " << k1 << endl;
+        cout << "Searching for: " << k1 << endl;    //cout for debugging
 
         //Chained Hashing search
-        int CHSearchOutput = chash.CHSearch(k1);
+        int CHSearchOutput = chash.CHSearch(k1);    //Declaring/grabbing search output variable
 
-        cout << "Chained search: " << CHSearchOutput << endl;
-        output << CHSearchOutput;
+        cout << "Chained search: " << CHSearchOutput << endl;   //cout for debugging
+        output << CHSearchOutput;   //Writing search value to output file
 
-        output.close();
+        output.close(); //Closing text file
 
         //************Creating Linear Hash output file************
 
-        output.open("LinearOutput.txt");
-        cout << "Linear output file open" << endl;
+        output.open("LinearOutput.txt");    //Opening new text file for linear output
+        cout << "Linear output file open" << endl;      //cout for debuggihng
         
         //Outputting values
         for (int i = 0; i < p; i++){    //For each bucket in the hash table, output the value
-            output << i << ":\t";
+            output << i << ":\t";       //Formatting
             if (lhash.getNumAtBucket(i) != -1){
-                output << lhash.getNumAtBucket(i) << endl;
+                output << lhash.getNumAtBucket(i) << endl;  //If the bucket isn't empty, then output the value in the bucket
             } else
-                output << endl;
+                output << endl; //else print a new line
         }
 
         //Outputting sequence of probes for requested key
         output << lhash.LHConstructProbePath(k1);
 
-        output.close();
+        output.close(); //Closing text file
 
-        cout << lhash.getNumAtBucket(0) << endl;
-        cout << lhash.getNumAtBucket(1) << endl;
-        cout << lhash.getNumAtBucket(5) << endl;
-        cout << lhash.getNumAtBucket(10) << endl;
+        //************Creating Double Hash output file************
+
+        output.open("DoubleOutput.txt");    //Opening new text file for Double Hash output
+        cout << "Double output file open" << endl;  //cout for debugging
+        
+        
+        //Outputting values
+        for (int i = 0; i < p; i++){    //For each bucket in the hash table, output the value
+            output << i << ":\t";       //Formatting
+            if (dhash.getNumAtBucket(i) != -1){
+                output << dhash.getNumAtBucket(i) << endl;      //If the vucket isn't empty, output the value in the bucket
+            } else
+                output << endl;     //else print a new line
+        }
+
+        //Outputting sequence of probes for requested key
+        output << dhash.DHConstructProbePath(k1);
+        output.close(); //Closing the output
+
+        cout << "Program complete" << endl; //cout for debugging
     }
 }

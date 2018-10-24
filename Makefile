@@ -1,5 +1,5 @@
 proj2: Hashtable.o ChainedHash.o LinearHash.o DoubleHash.o
-	g++ Hashtable.o ChainedHash.o LinearHash.o DoubleHash.o -o proj2
+	g++ Hashtable.o ChainedHash.o LinearHash.o DoubleHash.o -o Hashtable
 
 Hashtable.o: Hashtable.cpp
 	g++ -c Hashtable.cpp
