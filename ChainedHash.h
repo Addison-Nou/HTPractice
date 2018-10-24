@@ -1,0 +1,9 @@
+#pragma once
+
+class ChainedHash{
+    int size;
+    public:
+        ChainedHash(int size);
+        void CHInsert(int key);
+        int CHSearch(int key);
+};
