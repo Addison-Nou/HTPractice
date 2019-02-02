@@ -1,5 +1,5 @@
 # HTPractice
-Repository for my hash table assignment so I can recover it if I delete it like a goddamn retard.
+Repository for my hash table assignment so I can recover it if I delete it like a 'tard.
 
 For college students scouring the interwebs for this particular assignment to copy and submit as their own, please note:
   
